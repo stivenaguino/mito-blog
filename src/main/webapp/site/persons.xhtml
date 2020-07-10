@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/master.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <h1>Personas</h1>
+        <h:form id="frm" enctype="multipart/form-data">
+            <p:commandButton value="Nuevo" oncomplete="PF('wdlg').show()" actionListener="#{personaBean.cleanControls}" 
+                             update="frm:dlg-grid" immediate="true" process="@this" style="margin-bottom: 1em" />
+
+            <p:dataTable id="dt" var="persona" value="#{personaBean.personas}" paginator="true" rows="5"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5, 10, 15">
+
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{persona.nombre} #{persona.apellido}" />
+                </p:column>
+
+                <center>
+                    <p:column headerText="Sexo">
+                        <p:outputLabel value="#{persona.sexo}" />
+                    </p:column>
+                </center>
+
+                <p:column headerText="Pais">
+                    <p:outputLabel value="#{persona.pais}" />
+                </p:column>
+
+                <p:column headerText="Dirección">
+                    <p:outputLabel value="#{persona.direccion}" />
+                </p:column>
+
+                <p:column headerText="Acciones" exportable="false">
+                    <p:commandLink actionListener="#{personaBean.showData(persona)}" oncomplete="PF('wdlg').show()" update="frm:dlg-grid" immediate="true" process="@this">
+                        <h:graphicImage library="images" name="edit.jpg" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:dialog id="dlg-grid" widgetVar="wdlg" header="#{personaBean.tipoDialog}" modal="true" closeOnEscape="true" resizable="false" draggable="false">
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="nombre" value="Nombre" />
+                    <p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true" />
+                    <p:message for="nombre" display="icon" />
+
+                    <p:outputLabel for="apellido" value="Apellido" />
+                    <p:inputText id="apellido" value="#{personaBean.persona.apellido}" required="true" />
+                    <p:message for="apellido" display="icon" />
+
+                    <p:outputLabel for="sexo" value="Sexo" />
+                    <p:inputText id="sexo" value="#{personaBean.persona.sexo}" required="true" />
+                    <p:message for="sexo" display="icon" />
+
+                    <p:outputLabel for="direccion" value="Direccion" />
+                    <p:inputText id="direccion" value="#{personaBean.persona.direccion}" required="true" />
+                    <p:message for="direccion" display="icon" />
+
+                    <p:outputLabel for="pais" value="Pais" />
+                    <p:inputText id="pais" value="#{personaBean.persona.pais}" required="true" />
+                    <p:message for="pais" display="icon" />
+
+                    <p:outputLabel for="foto" value="Foto" />
+                    <p:fileUpload id="foto" listener="#{personaBean.handleFileUpload}" mode="advanced" update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                    <p:growl id="messages" showDetail="true" /> 
+                    
+                    <p:graphicImage value="/image/#{personaBean.persona.idPersona}" width="120" height="120" cache="false" />
+                </h:panelGrid>
+                <p:commandButton value="#{personaBean.btnDialog}" ajax="true" actionListener="#{personaBean.operate}" 
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed) PF('wdlg').hide()" update="dt"/>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

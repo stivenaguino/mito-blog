@@ -1,0 +1,17 @@
+body {
+    font-family: Lato;
+}
+
+.resolution {
+    width: 55%; margin: 0 auto;
+}
+
+.ui-widget {
+    font-size: 100%;
+}
+
+
+.ui-widget-overlay {
+    background: #212529;
+    opacity: .35;
+}

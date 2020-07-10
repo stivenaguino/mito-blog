@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>MitoBlog</title>
+        <link href="resources/css/index.css" rel="stylesheet" />
+    </h:head>
+    <h:body>
+        <p:tooltip />
+        <h:form>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>
+        </h:form>
+        <h:form>
+            <div class="centerDiv" style="width: max-content; min-width: 300px">
+                <p:panel>
+                    <f:facet name="header">Login</f:facet>
+                    <h:panelGrid columns="2" id="grid">
+                        <p:outputLabel for="usuario" value="Usuario:" />
+                        <h:inputText id="usuario" required="true" value="#{indexBean.usuario.usuario}" />
+                        <p:outputLabel for="contrasenia" value="Contraseña:" />
+                        <h:inputSecret id="contrasenia" required="true" value="#{indexBean.usuario.contrasenia}" />
+                    </h:panelGrid>
+                    <p:commandButton value="Login" action="#{indexBean.login}" update="grid"/>
+                    <p:commandButton value="Crear Usuario" action="registrar?faces-redirect=true" immediate="true" />
+                </p:panel>
+            </div>
+
+        </h:form>
+    </h:body>
+</html>
+

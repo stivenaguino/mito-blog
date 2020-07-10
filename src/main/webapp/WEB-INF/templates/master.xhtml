@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="title">MitoBlog</ui:insert></title>
+        <h:outputStylesheet library="css" name="styles.css" />
+    </h:head>
+    <h:body class="resolution">
+        <ui:insert name="header">
+            <h:form>
+                <p:menubar autoDisplay="false">
+                    <p:menuitem icon="ui-icon-home" value="Inicio" url="home.xhtml" />
+                    <p:menuitem icon="ui-icon-person" value="Publicaciones" url="publications.xhtml" />
+
+                    <p:submenu label="Seguidores" icon="ui-icon-person">
+                        <p:menuitem icon="ui-icon-person" value="Mis Seguidores" url="followers.xhtml" />
+                        <p:menuitem icon="ui-icon-person" value="¿A Quien Seguir?" url="follow.xhtml" />
+                    </p:submenu>
+
+                    <p:submenu label="Mantenedores" icon="ui-icon-pencil">
+                        <p:menuitem icon="ui-icon-document" value="Personas" url="persons.xhtml" />
+                        <p:menuitem icon="ui-icon-document" value="Usuarios" url="users.xhtml" />
+                        <p:menuitem icon="ui-icon-document" value="Roles" url="roles.xhtml" />
+                        <p:menuitem icon="ui-icon-document" value="Asignar Roles" url="assign-roles.xhtml" />
+                    </p:submenu>
+
+                    <p:menuitem icon="ui-icon-print" value="Seguidores" url="rep-seguidores.xhtml" />
+                </p:menubar>
+            </h:form>
+        </ui:insert>
+        <ui:insert name="content" />
+        <ui:insert name="footer">
+            <div>
+                Copyright © Stiven Aguiño, 2020. Todos los derechos reservados
+            </div>
+        </ui:insert>
+    </h:body>
+</html>
+

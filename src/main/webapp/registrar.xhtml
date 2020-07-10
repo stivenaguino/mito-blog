@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>MitoBlog</title>
+        <link href="./resources/css/index.css" rel="stylesheet" type="text/css" />
+    </h:head> 
+    <body> 
+        <div class="centerDiv" style="width: max-content">
+            <h:form>
+                <p:messages globalOnly="true" />
+                <p:panel>
+                    <f:facet name="header">Registrar Usuario</f:facet>
+                    <h:panelGrid id="pg" columns="4">
+                        <p:outputLabel for="nombre" value="Nombres" />
+                        <p:inputText id="nombre" value="#{registroBean.persona.nombre}" required="true" />
+                        <p:message for="nombre" display="text" />
+                        <h:column />
+
+                        <p:outputLabel for="apellido" value="Apellidos" />
+                        <p:inputText id="apellido" value="#{registroBean.persona.apellido}" required="true" />
+                        <p:message for="apellido" display="text" />
+                        <h:column />
+
+                        <p:outputLabel for="sexo" value="Sexo" />
+                        <p:selectOneRadio id="sexo" value="#{registroBean.persona.sexo}" required="true">
+                            <f:selectItem itemLabel="Masculino" itemValue="M" />
+                            <f:selectItem itemLabel="Femenino" itemValue="F" />
+                        </p:selectOneRadio>
+                        <p:message for="sexo" display="text" />
+                        <h:column />
+
+                        <p:outputLabel for="pais" value="Pais" />
+                        <p:selectOneMenu id="pais" value="#{registroBean.persona.pais}" filter="true" filterMatchMode="contains" required="true">
+                            <f:selectItem noSelectionOption="true" value="#{null}" itemLabel="--Seleccione--"/>
+                            <f:selectItems value="#{paisDTO.paises}" var="pais" itemLabel="#{pais}" itemValue="#{pais}" />
+                        </p:selectOneMenu>
+                        <p:message for="pais" display="text" />
+                        <h:column />
+
+                        <p:outputLabel for="direccion" value="Direccion" />
+                        <p:inputTextarea id="direccion" value="#{registroBean.persona.direccion}" counter="display" rows="5" cols="30" maxlength="250" 
+                                         counterTemplate="{0} caracteres restantes." autoResize="false" required="true" />
+                        <p:message for="direccion" display="text" />
+                        <h:column />
+
+                        <h:column />
+                        <h:outputText id="display" />
+                        <h:column />
+                        <h:column />
+
+                        <p:outputLabel for="usuario" value="Usuario" />
+                        <p:inputText id="usuario" value="#{registroBean.usuario.usuario}" required="true" />
+                        <p:message for="usuario" display="text" />
+                        <h:column />
+
+                        <p:outputLabel for="pwd1" value="Contraseña 1:" />
+                        <p:password id="pwd1" value="#{registroBean.usuario.contrasenia}" match="pwd2" label="Password 1" required="true" 
+                                    validatorMessage="Contraseñas no coinciden"/>
+                        <p:message for="pwd1" display="text" />
+                        <h:column />
+
+                        <p:outputLabel for="pwd2" value="Contraseña 2:" />
+                        <p:password id="pwd2" value="#{registroBean.usuario.contrasenia}" label="Password 2" required="true" />
+                        <h:column />
+                        <h:column />
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="Inicio" action="index?faces-redirect=true" immediate="true"/>
+                    <p:commandButton value="Registrar" action="#{registroBean.register}" update="pg" />
+                </p:panel>
+            </h:form>
+        </div>
+    </body> 
+</html>
