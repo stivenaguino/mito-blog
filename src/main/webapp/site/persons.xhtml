@@ -12,9 +12,9 @@
             <p:commandButton value="Nuevo" oncomplete="PF('wdlg').show()" actionListener="#{personaBean.cleanControls}" 
                              update="frm:dlg-grid" immediate="true" process="@this" style="margin-bottom: 1em" />
 
-            <p:dataTable id="dt" var="persona" value="#{personaBean.personas}" paginator="true" rows="5"
+            <p:dataTable id="dt" var="persona" value="#{personaBean.personas}" paginator="true" rows="15"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="5, 10, 15">
+                         rowsPerPageTemplate="15, 30, 45">
 
                 <p:column headerText="Nombre">
                     <p:outputLabel value="#{persona.nombre} #{persona.apellido}" />
@@ -43,7 +43,7 @@
             </p:dataTable>
 
             <p:dialog id="dlg-grid" widgetVar="wdlg" header="#{personaBean.tipoDialog}" modal="true" closeOnEscape="true" resizable="false" draggable="false">
-                <h:panelGrid columns="3">
+                <h:panelGrid id="data-person" columns="3">
                     <p:outputLabel for="nombre" value="Nombre" />
                     <p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true" />
                     <p:message for="nombre" display="icon" />
@@ -53,7 +53,10 @@
                     <p:message for="apellido" display="icon" />
 
                     <p:outputLabel for="sexo" value="Sexo" />
-                    <p:inputText id="sexo" value="#{personaBean.persona.sexo}" required="true" />
+                    <p:selectOneRadio id="sexo" value="#{personaBean.persona.sexo}" required="true">
+                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                        <f:selectItem itemLabel="Femenino" itemValue="F" />
+                    </p:selectOneRadio>
                     <p:message for="sexo" display="icon" />
 
                     <p:outputLabel for="direccion" value="Direccion" />
@@ -61,17 +64,20 @@
                     <p:message for="direccion" display="icon" />
 
                     <p:outputLabel for="pais" value="Pais" />
-                    <p:inputText id="pais" value="#{personaBean.persona.pais}" required="true" />
+                    <p:selectOneMenu id="pais" value="#{personaBean.persona.pais}" filter="true" filterMatchMode="contains" required="true">
+                        <f:selectItem noSelectionOption="true" value="#{null}" itemLabel="--Seleccione--"/>
+                        <f:selectItems value="#{paisDTO.paises}" var="pais" itemLabel="#{pais}" itemValue="#{pais}" />
+                    </p:selectOneMenu>
                     <p:message for="pais" display="icon" />
 
                     <p:outputLabel for="foto" value="Foto" />
-                    <p:fileUpload id="foto" listener="#{personaBean.handleFileUpload}" mode="advanced" update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                    <p:growl id="messages" showDetail="true" /> 
-                    
+                    <p:fileUpload id="foto" listener="#{personaBean.handleFileUpload}" mode="advanced" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                    <p:message for="pais" display="icon" />
+
                     <p:graphicImage value="/image/#{personaBean.persona.idPersona}" width="120" height="120" cache="false" />
                 </h:panelGrid>
                 <p:commandButton value="#{personaBean.btnDialog}" ajax="true" actionListener="#{personaBean.operate}" 
-                                 oncomplete="if (args &amp;&amp; !args.validationFailed) PF('wdlg').hide()" update="dt"/>
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed) PF('wdlg').hide()" update="data-person"/>
             </p:dialog>
         </h:form>
     </ui:define>

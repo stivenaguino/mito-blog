@@ -3,6 +3,7 @@ package com.stivenaguino.bean;
 import com.stivenaguino.model.Persona;
 import com.stivenaguino.service.IPersonaService;
 import com.stivenaguino.util.Constants;
+import com.stivenaguino.util.Utilities;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -11,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 
 @Named
@@ -39,12 +41,14 @@ public class PersonaBean implements Serializable {
         switch (this.accion) {
             case Constants.INSERT:
                 this.personaService.create(this.persona);
+                this.listPersons();
                 break;
             case Constants.UPDATE:
                 this.personaService.edit(this.persona);
                 break;
             default:
         }
+        PrimeFaces.current().ajax().update("frm:dt");
     }
 
     public void handleFileUpload(FileUploadEvent event) {
@@ -60,6 +64,7 @@ public class PersonaBean implements Serializable {
         this.btnDialog = "Modificar";
         this.persona = persona;
         this.accion = Constants.UPDATE;
+        Utilities.resetComponent("frm:dlg-grid");
     }
 
     public void cleanControls() {
@@ -67,6 +72,7 @@ public class PersonaBean implements Serializable {
         this.btnDialog = "Registrar";
         this.persona = new Persona();
         this.accion = Constants.INSERT;
+        Utilities.resetComponent("frm:dlg-grid");
     }
 
     public Persona getPersona() {
