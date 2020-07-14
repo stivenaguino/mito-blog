@@ -15,3 +15,7 @@ body {
     background: #212529;
     opacity: .35;
 }
+
+.size-bottom {
+    margin-bottom: 1em;
+}

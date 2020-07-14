@@ -31,6 +31,14 @@ public class Usuario implements Serializable {
     @MapsId
     private Persona persona;
 
+    public Usuario() {
+    }
+
+    public Usuario(Integer idUsuario, Persona persona) {
+        this.idUsuario = idUsuario;
+        this.persona = persona;
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }

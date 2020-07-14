@@ -52,7 +52,7 @@ public class RolDao implements IRolDao {
     @Override
     public void assign(Usuario usuario, List<UsuarioRol> usuarioRols) throws Exception {
         log.info("Ingresa al método assign de la clase {}", RolDao.class.getSimpleName());
-        Query query = em.createNativeQuery("DELETE FROM Usuario_Rol WHERE Id = :Id");
+        Query query = em.createNativeQuery("DELETE FROM Usuario_Rol WHERE Id_Usuario = :Id");
         query.setParameter("Id", usuario.getIdUsuario());
         log.info("Registros afectador {}", query.executeUpdate());
         //Scroll through the listRoles List
