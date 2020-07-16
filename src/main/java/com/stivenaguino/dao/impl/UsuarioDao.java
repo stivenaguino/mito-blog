@@ -31,7 +31,7 @@ public class UsuarioDao implements IUsuarioDao {
 
     @Override
     public List<Usuario> findAll() {
-        return null;
+        return em.createNamedQuery("usuario.findAll").getResultList();
     }
 
     @Override

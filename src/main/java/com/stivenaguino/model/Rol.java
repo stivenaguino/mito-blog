@@ -12,7 +12,9 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "rol.findAll", query = "SELECT r FROM Rol r"),
-    @NamedQuery(name = "rol.RolById", query = "SELECT r FROM Rol r WHERE r.idRol = :idRol")
+    @NamedQuery(name = "rol.RolById", query = "SELECT r FROM Rol r WHERE r.idRol = :idRol"),
+    @NamedQuery(name = "rol.RolesUsername", query = "SELECT r FROM Rol r WHERE EXISTS (SELECT 'x' FROM UsuarioRol ur WHERE ur.usuario.idUsuario = :usuario AND ur.rol.idRol = r.idRol)"),
+    @NamedQuery(name = "rol.RolesNotUsername", query = "SELECT r FROM Rol r WHERE NOT EXISTS (SELECT 'x' FROM UsuarioRol ur WHERE ur.usuario.idUsuario = :usuario AND ur.rol.idRol = r.idRol)")
 })
 public class Rol implements Serializable {
 

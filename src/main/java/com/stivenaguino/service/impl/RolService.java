@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import com.stivenaguino.dao.IRolDao;
 import com.stivenaguino.model.Usuario;
 import com.stivenaguino.model.UsuarioRol;
+import com.stivenaguino.util.Utilities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.inject.Named;
@@ -65,6 +66,14 @@ public class RolService implements IRolService, Serializable {
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }
+    }
+
+    @Override
+    public List<Rol> rolesUsername(Usuario usuario, boolean rolesUsername) {
+        if (usuario == null) {
+            return new ArrayList();
+        }
+        return this.iRolDao.rolesUsername(usuario, rolesUsername);
     }
 
 }

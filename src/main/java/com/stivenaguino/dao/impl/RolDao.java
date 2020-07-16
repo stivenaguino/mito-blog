@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.stivenaguino.dao.IRolDao;
+import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -67,6 +68,16 @@ public class RolDao implements IRolDao {
             numeroIteraciones++;
         }
         log.info("Sale del método assign de la clase {}", RolDao.class.getSimpleName());
+    }
+
+    @Override
+    public List<Rol> rolesUsername(Usuario usuario, boolean rolesUsername) {
+        Query query = rolesUsername
+                ? em.createNamedQuery("rol.RolesUsername").setParameter("usuario", usuario.getIdUsuario())
+                : em.createNamedQuery("rol.RolesNotUsername").setParameter("usuario", usuario.getIdUsuario());
+
+        List<Rol> roles = query.getResultList();
+        return roles.isEmpty() ? new ArrayList() : roles;
     }
 
 }

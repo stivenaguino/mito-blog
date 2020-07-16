@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @NamedQueries({
+    @NamedQuery(name = "usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "usuario.findByUsername", query = "SELECT u FROM Usuario u WHERE u.usuario = :username")
 })
 public class Usuario implements Serializable {

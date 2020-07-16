@@ -5,13 +5,11 @@
  */
 package com.stivenaguino.bean;
 
-import com.stivenaguino.model.Persona;
 import com.stivenaguino.model.Rol;
 import com.stivenaguino.model.Usuario;
-import com.stivenaguino.service.IPersonaService;
 import com.stivenaguino.service.IRolService;
+import com.stivenaguino.service.IUsuarioService;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -28,11 +26,11 @@ import org.primefaces.model.DualListModel;
 public class AsignarBean implements Serializable {
 
     @Inject
-    private IPersonaService personaService;
+    private IUsuarioService usuarioService;
     @Inject
     private IRolService rolService;
-    private List<Persona> personas;
-    private Persona persona;
+    private List<Usuario> usuarios;
+    private Usuario usuario;
     private DualListModel<Rol> roles;
 
     @PostConstruct
@@ -42,34 +40,17 @@ public class AsignarBean implements Serializable {
     }
 
     public void listPersons() {
-        this.personas = personaService.findAll();
+        this.usuarios = usuarioService.findAll();
     }
 
     public void listRoles() {
-        List<Rol> rolesSource = rolService.findAll();
-        List<Rol> rolesTarget = new ArrayList();
+        List<Rol> rolesSource = rolService.rolesUsername(this.usuario, false);
+        List<Rol> rolesTarget = rolService.rolesUsername(this.usuario, true);
         this.roles = new DualListModel(rolesSource, rolesTarget);
     }
 
     public void assign() {
-        Usuario usuario = new Usuario(this.persona.getIdPersona(), this.persona);
-        this.rolService.assign(usuario, this.roles.getTarget());
-    }
-
-    public List<Persona> getPersonas() {
-        return personas;
-    }
-
-    public void setPersonas(List<Persona> personas) {
-        this.personas = personas;
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+        this.rolService.assign(this.usuario, this.roles.getTarget());
     }
 
     public DualListModel<Rol> getRoles() {
@@ -78,6 +59,22 @@ public class AsignarBean implements Serializable {
 
     public void setRoles(DualListModel<Rol> roles) {
         this.roles = roles;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

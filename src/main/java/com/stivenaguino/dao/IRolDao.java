@@ -10,4 +10,7 @@ import javax.ejb.Local;
 public interface IRolDao extends ICrud<Rol> {
 
     void assign(Usuario usuario, List<UsuarioRol> usuarioRols) throws Exception;
+
+    List<Rol> rolesUsername(Usuario usuario, boolean rolesUsername);
+
 }
