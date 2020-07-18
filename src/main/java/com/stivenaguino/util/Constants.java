@@ -8,5 +8,7 @@ public class Constants {
     public static final String USER_SESSION = "user";
     public static final char INSERT = 'c';
     public static final char UPDATE = 'u';
+    public static final String TAG_MENCION = "@";
+    public static final String TAG_TAG = "#";
 
 }

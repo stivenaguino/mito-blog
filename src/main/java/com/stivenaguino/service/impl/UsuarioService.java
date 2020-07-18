@@ -58,7 +58,7 @@ public class UsuarioService implements Serializable, IUsuarioService {
     }
 
     @Override
-    public boolean login(Usuario usuario) {
+    public Usuario login(Usuario usuario) {
         boolean loginSuccess = false;
         Usuario usuarioDB = iUsuarioDao.findByUsername(usuario.getUsuario());
         try {
@@ -69,7 +69,7 @@ public class UsuarioService implements Serializable, IUsuarioService {
             log.info("Credenciales incorrectas: {}", UsuarioService.class.getCanonicalName());
             //ex.printStackTrace(System.out);
         }
-        return loginSuccess;
+        return loginSuccess ? usuarioDB : new Usuario();
     }
 
 }

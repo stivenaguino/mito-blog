@@ -25,9 +25,10 @@ public class IndexBean {
 
     public String login() {
         String redirect = "";
-        if (usuarioService.login(usuario)) {
+        Usuario usuarioLogin = usuarioService.login(usuario);
+        if (usuarioLogin != null) {
             redirect = "/site/roles?faces-redirect=true";
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(Constants.USER_SESSION, usuario);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(Constants.USER_SESSION, usuarioLogin);
         } else {
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "Credenciales incorrectas");
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);

@@ -22,6 +22,14 @@ public class Mencion implements Serializable {
     @JoinColumn(name = "id_publicacion", nullable = false)
     private Publicacion publicacion;
 
+    public Mencion() {
+    }
+
+    public Mencion(String texto, Publicacion publicacion) {
+        this.texto = texto;
+        this.publicacion = publicacion;
+    }
+
     public Integer getIdMencion() {
         return idMencion;
     }

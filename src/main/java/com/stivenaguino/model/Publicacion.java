@@ -11,9 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "publicacion.findByFollower", query = "SELECT p FROM Publicacion p WHERE p.publicador.idPersona = :idPersona ORDER BY p.idPublicacion DESC")
+})
 public class Publicacion implements Serializable {
 
     @Id
@@ -27,7 +32,7 @@ public class Publicacion implements Serializable {
     private Persona publicador;
     @OneToMany(mappedBy = "publicacion", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tags;
-    @OneToMany(mappedBy = "publicacion")
+    @OneToMany(mappedBy = "publicacion", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Mencion> mensiones;
 
     public Integer getIdPublicacion() {
@@ -58,8 +63,16 @@ public class Publicacion implements Serializable {
         return tags;
     }
 
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     public List<Mencion> getMensiones() {
         return mensiones;
+    }
+
+    public void setMensiones(List<Mencion> mensiones) {
+        this.mensiones = mensiones;
     }
 
     @Override
