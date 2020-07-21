@@ -3,10 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title><ui:insert name="title">MitoBlog</ui:insert></title>
         <h:outputStylesheet library="css" name="styles.css" />
+        <f:event listener="#{masterBean.verifySession}" type="preRenderView" />
     </h:head>
     <h:body class="resolution">
         <ui:insert name="header">
@@ -28,6 +30,10 @@
                     </p:submenu>
 
                     <p:menuitem icon="ui-icon-print" value="Seguidores" url="rep-seguidores.xhtml" />
+
+                    <f:facet name="options">
+                        <p:commandButton icon="ui-icon-power" actionListener="#{masterBean.signOff}" />
+                    </f:facet>
                 </p:menubar>
             </h:form>
         </ui:insert>
