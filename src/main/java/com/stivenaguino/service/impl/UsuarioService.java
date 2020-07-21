@@ -69,7 +69,7 @@ public class UsuarioService implements Serializable, IUsuarioService {
             log.info("Credenciales incorrectas: {}", UsuarioService.class.getCanonicalName());
             //ex.printStackTrace(System.out);
         }
-        return loginSuccess ? usuarioDB : new Usuario();
+        return loginSuccess ? usuarioDB : null;
     }
 
 }

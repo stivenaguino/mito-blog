@@ -1,6 +1,7 @@
 package com.stivenaguino.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
@@ -36,6 +38,8 @@ public class Persona implements Serializable {
     private byte[] foto;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
     private Usuario usuario;
+    @Transient
+    private boolean following;
 
     public Persona() {
     }
@@ -104,6 +108,14 @@ public class Persona implements Serializable {
         this.usuario = usuario;
     }
 
+    public boolean isFollowing() {
+        return following;
+    }
+
+    public void setFollowing(boolean following) {
+        this.following = following;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -115,6 +127,31 @@ public class Persona implements Serializable {
         sb.append(", direccion=").append(direccion);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.idPersona);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Persona other = (Persona) obj;
+        if (!Objects.equals(this.idPersona, other.idPersona)) {
+            return false;
+        }
+        return true;
     }
 
 }

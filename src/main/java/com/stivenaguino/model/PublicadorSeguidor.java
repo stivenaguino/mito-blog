@@ -9,10 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "publicador_seguidor")
+@NamedQueries({
+    @NamedQuery(name = "PublicadorSeguidor.findByFollowed", query = "SELECT ps FROM PublicadorSeguidor ps WHERE ps.seguidor.idPersona = :idPersona"),
+    @NamedQuery(name = "PublicadorSeguidor.findByFollowers", query = "SELECT ps FROM PublicadorSeguidor ps WHERE ps.publicador.idPersona = :idPersona"),})
 public class PublicadorSeguidor implements Serializable {
 
     @Id
@@ -27,6 +32,15 @@ public class PublicadorSeguidor implements Serializable {
     private Persona seguidor;
     @Column(nullable = false)
     private LocalDateTime fecha;
+
+    public PublicadorSeguidor() {
+    }
+
+    public PublicadorSeguidor(Persona publicador, Persona seguidor, LocalDateTime fecha) {
+        this.publicador = publicador;
+        this.seguidor = seguidor;
+        this.fecha = fecha;
+    }
 
     public Integer getIdPublicadorSeguidor() {
         return idPublicadorSeguidor;
