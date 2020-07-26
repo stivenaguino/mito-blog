@@ -76,14 +76,20 @@ public class PublicationService implements IPublicationService, Serializable {
 
     @Override
     public List<Publicacion> listPublicationByPublisher(Persona publisher) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Publicacion> list = new ArrayList();
+        try {
+            list = this.iPublicationDao.listPublicationByPublisher(publisher);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+        return list;
     }
 
     @Override
     public List<Publicacion> listPublicationByFollower(Persona persona) {
         List<Publicacion> list = new ArrayList();
         try {
-            list = this.iPublicationDao.listPublicationByFollower(persona);
+            list = iPublicationDao.listPublicationByFollower(persona);
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
         }

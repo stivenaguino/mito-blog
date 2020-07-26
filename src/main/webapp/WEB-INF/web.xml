@@ -27,4 +27,15 @@
         <param-value>pepper-grinder</param-value>
         <!--<param-value>bootstrap</param-value>-->
     </context-param>
+    <!-- INIT JSF SOCKETS -->
+    <!-- Habilita la inyección de dependencias en los sockets -->
+    <context-param>
+        <param-name>javax.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!-- FIN JSF SOCKETS -->
 </web-app>

@@ -19,6 +19,8 @@ public class PublicationBean implements Serializable {
 
     @Inject
     private IPublicationService publicationService;
+    @Inject
+    private PushBean pushBean;
     private Publicacion publicacion;
     private Usuario usuario;
     private List<Publicacion> publications;
@@ -34,12 +36,13 @@ public class PublicationBean implements Serializable {
         Persona persona = new Persona(this.usuario.getPersona().getIdPersona());
         this.publicacion.setPublicador(persona);
         this.publicationService.create(publicacion);
+        this.pushBean.sendMessage();
         this.publicacion = new Publicacion();
         this.listPublications();
     }
 
     public void listPublications() {
-        this.publications = this.publicationService.listPublicationByFollower(this.usuario.getPersona());
+        this.publications = this.publicationService.listPublicationByPublisher(this.usuario.getPersona());
     }
 
     public Publicacion getPublicacion() {

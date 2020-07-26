@@ -43,7 +43,9 @@ public class PublicationDao implements IPublicationDao {
 
     @Override
     public List<Publicacion> listPublicationByPublisher(Persona publisher) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Query query = em.createNamedQuery("publicacion.findByPublisher").setParameter("idPersona", publisher.getIdPersona());
+        List<Publicacion> list = query.getResultList();
+        return list.isEmpty() ? new ArrayList() : list;
     }
 
     @Override

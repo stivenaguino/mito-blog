@@ -17,8 +17,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "publicacion.findByFollower", query = "SELECT p FROM Publicacion p WHERE p.publicador.idPersona = :idPersona ORDER BY p.idPublicacion DESC")
-})
+    @NamedQuery(name = "publicacion.findByPublisher", query = "SELECT p FROM Publicacion p WHERE p.publicador.idPersona = :idPersona ORDER BY p.idPublicacion DESC"),
+    @NamedQuery(name = "publicacion.findByFollower", query = "SELECT p FROM Publicacion p WHERE p.publicador.idPersona = (SELECT ps.publicador.idPersona FROM PublicadorSeguidor ps WHERE ps.seguidor.idPersona = :idPersona) ORDER BY p.idPublicacion DESC"),})
 public class Publicacion implements Serializable {
 
     @Id
