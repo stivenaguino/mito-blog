@@ -14,7 +14,8 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "usuario.findByUsername", query = "SELECT u FROM Usuario u WHERE u.usuario = :username")
+    @NamedQuery(name = "usuario.findByUsername", query = "SELECT u FROM Usuario u WHERE u.usuario = :username"),
+    @NamedQuery(name = "usuario.findByLikeUsername", query = "SELECT u FROM Usuario u WHERE u.usuario LIKE :username")
 })
 public class Usuario implements Serializable {
 

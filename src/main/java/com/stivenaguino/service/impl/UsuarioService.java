@@ -72,4 +72,18 @@ public class UsuarioService implements Serializable, IUsuarioService {
         return loginSuccess ? usuarioDB : null;
     }
 
+    @Override
+    public void updateUserPassword(Usuario usuario) {
+        try {
+            this.iUsuarioDao.updateUserPassword(usuario);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    @Override
+    public List<Usuario> findByLikeUsername(String criterio) {
+        return this.iUsuarioDao.findByLikeUsername(criterio);
+    }
+
 }

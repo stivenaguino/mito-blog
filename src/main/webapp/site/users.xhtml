@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/master.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <h1>Usuarios</h1>
+        <h:form>
+            <h:panelGrid columns="2" id="grid">
+                <p:inputText id="search-username" placeholder="Buscar Usuarios" value="#{userBean.criteriaSearch}" />
+                <p:commandButton actionListener="#{userBean.listUsers}" value="Buscar" update="frm:dt" />
+            </h:panelGrid>
+        </h:form>
+        <h:form id="frm">
+            <p:dataTable id="dt" var="user" value="#{userBean.userList}" paginator="true" rows="15"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="15, 30, 45">
+
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{user.usuario}" />
+                </p:column>
+
+                <p:column headerText="Estado">
+                    <center>
+                        <p:outputLabel value="#{user.estado}" />
+                    </center>
+                </p:column>
+
+                <p:column headerText="Acciones" exportable="false">
+                    <center>
+                        <p:commandLink actionListener="#{userBean.showData(user)}" oncomplete="PF('wdlg').show()" update="frm:dlg-grid" immediate="true" process="@this">
+                            <h:graphicImage library="images" name="edit.jpg" />
+                        </p:commandLink>
+                    </center>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:dialog id="dlg-grid" widgetVar="wdlg" header="#{userBean.tipoDialog}" modal="true" closeOnEscape="true" resizable="false" draggable="false">
+                <h:panelGrid id="data-user" columns="3">
+                    <p:outputLabel for="username" value="Nombre" />
+                    <p:inputText id="username" value="#{userBean.usuario.usuario}" required="true" disabled="true" />
+                    <p:message for="username" display="icon" />
+
+                    <p:outputLabel for="current-password" value="Contraseña actual" />
+                    <p:password id="current-password" value="#{userBean.currentPassword}" required="true" />
+                    <p:commandButton actionListener="#{userBean.verifyPassword}" value="Verificar" process="@this,current-password" />
+
+                    <p:outputLabel for="pwd1" value="Nueva Contraseña" />
+                    <p:password id="pwd1" value="#{userBean.newPasword}" match="pwd2" label="Password 1" required="true" 
+                                validatorMessage="Las contraseñas deben coincidir para poder aceptar." />
+                    <p:message for="pwd1" display="text" />
+
+                    <p:outputLabel for="pwd2" value="Contraseña 2:" />
+                    <p:password id="pwd2" value="#{userBean.newPasword}" label="Password 2" required="true" />
+                    <h:column />
+                </h:panelGrid>
+                <p:outputPanel id="btns-modal">
+                    <p:commandButton id="btnAccept" value="Aceptar" ajax="true" rendered="#{userBean.passwordSuccessful}"
+                                     oncomplete="if (args &amp;&amp; !args.validationFailed) PF('wdlg').hide()" update="data-user"
+                                     actionListener="#{userBean.updateUserPassword}" />
+                    <p:commandButton value="Cancelar" oncomplete="PF('wdlg').hide()" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
